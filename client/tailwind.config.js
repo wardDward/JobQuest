@@ -5,13 +5,14 @@ export default {
     extend: {
       colors: {
         current: "#2739DF",
-        currentDarker: '#2134de',
+        currentDarker: "#2134de",
+        darkerBlue: '#051a49',
         magenta: {
-          100: '#FF00FF',
-          200: '#ad03ad'
+          100: "#FF00FF",
+          200: "#ad03ad",
         },
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
