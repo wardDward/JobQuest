@@ -6,7 +6,7 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 export default function DropDownMenu() {
     return (
-        <div className="bg-white shadow-lg absolute top-full right-2 w-[30%] border-[3px] py-4 px-[10px]  z-[99999999] flex flex-col">
+        <div className="flex flex-col" onClick={(e) => e.stopPropagation()}>
             <Link className="py-3 px-5 flex justify-between items-center shadow-lg m-2 rounded-md hover:bg-slate-100">
                 <img src="../../assets/logo.png" className="h-[40px] w-[40px] rounded-full" alt="" />
                 <span className="truncate m-2 text-sm font-semibold">Edward Taligatos</span>

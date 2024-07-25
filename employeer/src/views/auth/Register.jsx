@@ -35,13 +35,13 @@ export default function Register() {
                 <div className="flex flex-col mt-5 mb-2">
                     <label htmlFor="email" className="text-gray-600 font-medium text-md">Email address</label>
                     <input type="email" name="email" id="email" placeholder="company@example.com" className="mt-1 border-[2px] border-gray-400 py-2 px-2 rounded-lg placeholder:text-sm outline-none focus:ring-1 focus:border-darkerBlue" onChange={(e) => handleInputChanges(e, formData, setFormData)} />
-                    {errorMessage.email && <p className="text-red-500 text-sm mt-1">{errorMessage.email[0]}</p>}
+                    {errorMessage?.email && <p className="text-red-500 text-sm mt-1">{errorMessage.email[0]}</p>}
 
                 </div>
                 <div className="flex flex-col my-2">
                     <label htmlFor="password" className="text-gray-600 font-medium text-md">Password</label>
-                    <input type="password" name="password" id="password" className="mt-1 border-[2px] border-gray-400 py-2 px-2 rounded-lg outline-none focus:ring-1 focus:border-darkerBlue" onChange={(e) => handleInputChanges(e, formData, setFormData)} />
-                    {errorMessage.password && <p className="text-red-500 text-sm mt-1">{errorMessage.password[0]}</p>}
+                    <input type="password" name="password" id="password" className="mt-1 border-[2px] border-gray-400 py-2 px-2 rounded-lg outline-none focus:ring-1 focus:border-darkerBlue" value={formData.password} onChange={(e) => handleInputChanges(e, formData, setFormData)} />
+                    {errorMessage?.password && <p className="text-red-500 text-sm mt-1">{errorMessage.password[0]}</p>}
                 </div>
                 <div className="flex mt-5 mb-4">
                     <div className="mr-2">

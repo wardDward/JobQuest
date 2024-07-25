@@ -11,6 +11,9 @@ export const createJob = createAsyncThunk(
         title: data.formData.title,
         starting_salary: data.formData.starting_salary,
         to_salary: data.formData.to_salary,
+        position: data.formData.position,
+        location: data.formData.location,
+        employement: data.formData.employement,
       });
       return response.data;
     } catch (error) {
@@ -31,3 +34,14 @@ export const fetchJobs = createAsyncThunk(
     }
   }
 );
+
+
+
+export const fetchJob = createAsyncThunk("jobs/fetchJob", async(data, thunkApi) =>{
+  try {
+      const response = await axios.get(`/api/jobs/${data}`)
+      return response.data.data
+  } catch (error) {
+    return thunkApi.rejectWithValue(error.response.data.errors)
+  }
+})

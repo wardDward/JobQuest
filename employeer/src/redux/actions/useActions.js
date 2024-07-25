@@ -33,9 +33,9 @@ export const authenticatedEmployeer = createAsyncThunk(
   "users/authenticatedEmployeer",
   async (_, thunkApi) => {
     try {
-      await axios.get("/sanctum/csrf-cookie");
-      const response = await axios.get("/api/user");
-      return response.data;
+      await axios.get("/sanctum/csrf-cookie")
+      const response = await axios.get("/api/user")
+      return response.data.data
     } catch (error) {
       window.location.replace('/')
       return thunkApi.rejectWithValue(error.response.data.errors);
@@ -46,6 +46,7 @@ export const authenticatedEmployeer = createAsyncThunk(
 export const updateProfile = createAsyncThunk(
   "users/updateProfile",
   async (data, thunkApi) => {
+    console.log(data);
     try {
       const response = await axios.post("/api/profile", data, {
         headers: {

@@ -15,6 +15,9 @@ const NotFound = lazy(() => import("../views/NotFound"));
 const HeroPage = lazy(() => import("../views/guest/HeroPage"));
 const JobFinder = lazy(() => import("../views/JobFinder"));
 const ResendEmail = lazy(() => import("../views/auth/ResendEmail"));
+const Profile = lazy(() => import("../views/auth/Profile"));
+const Resume = lazy(() => import('../views/auth/Resume'))
+
 import GuestRoute from "./GuestRoute";
 import ProtectedRoute from "./ProtectedRoute";
 import SuspenseWrapper from "../components/SuspenseWrapper";
@@ -53,6 +56,9 @@ const router = createBrowserRouter(
       {/* private routes */}
 
       <Route element={<ProtectedRoute />}>
+        <Route path="/profile" element={<SuspenseWrapper>
+          <Profile />
+        </SuspenseWrapper>} />
         <Route
           element={
             <SuspenseWrapper>
@@ -69,6 +75,14 @@ const router = createBrowserRouter(
             }
           />
           <Route
+            path="/resume"
+            element={
+              <SuspenseWrapper>
+                <Resume/>
+              </SuspenseWrapper>
+            }
+          />
+          <Route
             path="/email/verification"
             element={
               <SuspenseWrapper>
@@ -76,6 +90,7 @@ const router = createBrowserRouter(
               </SuspenseWrapper>
             }
           />
+
         </Route>
       </Route>
 

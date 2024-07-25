@@ -13,6 +13,8 @@ class JobPost extends Model
         'user_id',
         'title',
         'description',
+        'position',
+        'location',
         'starting_salary',
         'to_salary'
     ];

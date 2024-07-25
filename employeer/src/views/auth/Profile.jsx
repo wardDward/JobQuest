@@ -6,12 +6,12 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { handleInputChanges } from '../../utils/inputHelper';
 import { updateProfile } from '../../redux/actions/useActions';
 
-export default function Profile() {
+export default function Profile() { 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { } = useAuth();
 
-    const { users } = useSelector(state => state.users);
+    const { users, errorMessage } = useSelector(state => state.users);
 
     const [formData, setFormData] = useState({
         firstname: '',
@@ -31,7 +31,11 @@ export default function Profile() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await dispatch(updateProfile(formData));
+       const response =  await dispatch(updateProfile(formData));
+       if(response.meta.requestStatus === 'fulfilled')
+       {
+        navigate('/')
+       }
     };
 
     return (
@@ -63,6 +67,9 @@ export default function Profile() {
                                             className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 px-3"
                                         />
                                     </div>
+                                    {errorMessage.firstname &&
+                                    <p className='text-red-500 text-sm'>{errorMessage.company_name[0]}</p>
+                                }
                                 </div>
                             </div>
 
@@ -125,6 +132,9 @@ export default function Profile() {
                                         onChange={(e) => handleInputChanges(e, formData, setFormData)}
                                     />
                                 </div>
+                                {errorMessage.firstname &&
+                                    <p className='text-red-500 text-sm'>{errorMessage.firstname[0]}</p>
+                                }
                             </div>
 
                             <div className="sm:col-span-3">
@@ -142,6 +152,9 @@ export default function Profile() {
                                         onChange={(e) => handleInputChanges(e, formData, setFormData)}
                                     />
                                 </div>
+                                {errorMessage.lastname &&
+                                    <p className='text-red-500 text-sm'>{errorMessage.lastname[0]}</p>
+                                }
                             </div>
                             <div className="col-span-full">
                                 <label htmlFor="middlename" className="block text-sm font-medium leading-6 text-gray-900">
@@ -174,6 +187,9 @@ export default function Profile() {
                                         onChange={(e) => handleInputChanges(e, formData, setFormData)}
                                     />
                                 </div>
+                                {errorMessage.location &&
+                                    <p className='text-red-500 text-sm'>{errorMessage.location[0]}</p>
+                                }
                             </div>
                         </div>
                     </div>

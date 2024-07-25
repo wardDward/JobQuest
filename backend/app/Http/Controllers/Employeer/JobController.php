@@ -31,6 +31,8 @@ class JobController extends Controller
         $data = $request->validate([
             'title' => ['required', 'max:255'],
             'description' => ['required'],
+            'position' => ['required'],
+            'location' => ['required'],
             'starting_salary' => ['required'],
             'to_salary' => ['required']
         ]);
@@ -53,9 +55,11 @@ class JobController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(JobPost $jobPost)
+    public function show($jobPost)
     {
-        //
+        $job =  JobPost::with(['user'])->where('id', $jobPost)->firstOrFail();
+
+        return new JobResource($job);
     }
 
     /**

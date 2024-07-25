@@ -2,7 +2,7 @@ import Google from "../../assets/google.png";
 import Facebook from "../../assets/facebook.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { handleLogin } from "../../redux/features/userSlice";
+import { handleLogin } from "../../redux/actions/userAction.js";
 import { handleInputChanges } from "../../utils/inputHelper";
 import { useState } from "react";
 

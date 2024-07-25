@@ -12,6 +12,8 @@ const CreatePost = lazy(() => import("../views/CreatePost"));
 const Resumes = lazy(() => import("../views/Resumes"));
 const JobQueue = lazy(() => import("../views/JobQueue"));
 const AuthLayout = lazy(() => import("../components/layouts/AuthLayout"));
+const SpecificJob = lazy(() => import("../views/SpecificJob"));
+
 import SuspenseWrapper from "../components/SuspenseWrapper";
 import MainLayout from "../components/layouts/MainLayout";
 import Dashboard from "../views/Dashboard";
@@ -49,11 +51,8 @@ const router = createBrowserRouter(
         </Route>
       </Route>
 
-
-
       {/* protected */}
       <Route element={<ProtectedRoute />}>
-
         <Route
           element={
             <SuspenseWrapper>
@@ -88,6 +87,15 @@ const router = createBrowserRouter(
             }
           />
           <Route
+            path="/job/:id"
+            element={
+              <SuspenseWrapper>
+                <SpecificJob />
+              </SuspenseWrapper>
+            }
+          />
+
+          <Route
             path="/resumes"
             element={
               <SuspenseWrapper>
@@ -105,7 +113,6 @@ const router = createBrowserRouter(
           />
         </Route>
       </Route>
-
 
       {/* global */}
       <Route

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,6 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('starting_salary');
             $table->string('to_salary');
+            $table->string('position');
+            $table->longText('location');
+            $table->enum('employement', ['Part time', 'Full time', 'Temporary'])->nullable();
             $table->longText('description');
             $table->timestamps();
         });

@@ -24,7 +24,10 @@ export default function CreatePost() {
     const [formData, setFormData] = useState({
         title: '',
         starting_salary: '',
-        to_salary: ''
+        to_salary: '',
+        position: '',
+        location: '',
+        employement: '',
     })
 
     const rawMarkup = marked(content, { sanitize: false });
@@ -43,6 +46,9 @@ export default function CreatePost() {
                 title: '',
                 starting_salary: '',
                 to_salary: '',
+                position: '',
+                location: '',
+                employement: '',
             })
             editor.commands.clearContent();
             setShowToast(true);
@@ -70,21 +76,41 @@ export default function CreatePost() {
                     <input type="text" name="title" id="title" className="w-full border-b-[1px] border-gray-500 py-4 outline-none text-lg text-gray-800 font-semibold mt-3" value={formData.title} onChange={(e) => handleInputChanges(e, formData, setFormData)} />
                     {errorMessage?.title && <p className="text-red-500 text-sm">{errorMessage?.title[0]}*</p>}
                 </div>
-                <div className="flex flex-wrap items-center">
-                    <div className="mt-4 flex flex-col w-full md:w-[40%]">
-                        <h1 className="text-2xl font-semibold text-gray-700">Starting Salary</h1>
-                        <input type="text" name="starting_salary" id="starting_salary" className="w-full  border-b-[1px] border-gray-500 py-4 outline-none text-lg text-gray-800 font-semibold mt-3" onChange={(e) => handleInputChanges(e, formData, setFormData)} value={formData.starting_salary} />
+                <div className="flex flex-wrap items-center justify-between">
+                    <div className="mt-4 flex flex-col w-full md:w-[33%]">
+                        <h1 className="text-lg font-semibold text-gray-700">Starting Salary</h1>
+                        <input type="text" name="starting_salary" id="starting_salary" className="w-full  border-b-[1px] border-gray-500 py-4 outline-none text-lg text-gray-800 font-semibold" onChange={(e) => handleInputChanges(e, formData, setFormData)} value={formData.starting_salary} />
                         {errorMessage?.starting_salary && <p className="text-red-500 text-sm">{errorMessage?.starting_salary[0]}*</p>}
-
                     </div>
                     <div className="mt-5 mx-6 hidden md:block">
-                        <h1 className="text-2xl font-semibold text-gray-700">To</h1>
+                        <h1 className="text-lg font-semibold text-gray-700">To</h1>
                     </div>
-                    <div className="mt-4 flex flex-col ml-0 md:ml-10 w-full md:w-[40%]">
-                        <h1 className="text-2xl font-semibold text-gray-700 ">From Salary</h1>
-                        <input type="text" name="to_salary" id="to_salary" className="w-full  border-b-[1px] border-gray-500 py-4 outline-none text-lg text-gray-800 font-semibold mt-3" onChange={(e) => handleInputChanges(e, formData, setFormData)} value={formData.to_salary} />
+                    <div className="mt-4 flex flex-col ml-0 md:ml-10 w-full md:w-[33%]">
+                        <h1 className="text-lg font-semibold text-gray-700 ">From Salary</h1>
+                        <input type="text" name="to_salary" id="to_salary" className="w-full  border-b-[1px] border-gray-500 py-4 outline-none text-lg text-gray-800 font-semibold" onChange={(e) => handleInputChanges(e, formData, setFormData)} value={formData.to_salary} />
                         {errorMessage?.to_salary && <p className="text-red-500 text-sm">{errorMessage?.to_salary[0]}*</p>}
-
+                    </div>
+                </div>
+                <div className="flex flex-wrap items-center my-5 justify-between">
+                    <div className="w-full md:w-[32%]">
+                        <h1 className="text-lg font-semibold text-gray-700">Position</h1>
+                        <input type="text" name="position" id="position" className="w-full  border-b-[1px] border-gray-500 py-4 outline-none text-lg text-gray-800 font-semibold" onChange={(e) => handleInputChanges(e, formData, setFormData)} value={formData.position} />
+                        {errorMessage?.position && <p className="text-red-500 text-sm">{errorMessage?.position[0]}*</p>}
+                    </div>
+                    <div className="w-full md:w-[33%]">
+                        <h1 className="text-lg font-semibold text-gray-700">Location</h1>
+                        <select name="employement" id="employement" className="w-full border-b-[1px] border-gray-500 py-4 outline-none text-lg text-gray-800 font-semibold" onChange={(e) => handleInputChanges(e, formData, setFormData)} value={formData.employement} >
+                            <option disabled value='' selected>Type of employment</option>
+                            <option value="Part time">Part time</option>
+                            <option value="Full time">Full time</option>
+                            <option value="Temporary">Temporary</option>
+                        </select>
+                        {errorMessage?.employement && <p className="text-red-500 text-sm">{errorMessage?.employement[0]}*</p>}
+                    </div>
+                    <div className="w-full md:w-[33%]">
+                        <h1 className="text-lg font-semibold text-gray-700">Location</h1>
+                        <input type="text" name="location" id="location" className="w-full border-b-[1px] border-gray-500 py-4 outline-none text-lg text-gray-800 font-semibold" onChange={(e) => handleInputChanges(e, formData, setFormData)} value={formData.location} />
+                        {errorMessage?.location && <p className="text-red-500 text-sm">{errorMessage?.location[0]}*</p>}
                     </div>
                 </div>
                 <div className="mt-9">

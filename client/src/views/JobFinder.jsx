@@ -7,7 +7,6 @@ export default function JobFinder() {
     return (
         <>
             <SearchSection />
-
             <div className="px-[20px] lg:px-[150px] mt-[80px] mb-[20px]">
                 <div className="flex items-center justify-between w-full lg:w-[30%]">
                     <h3 className="text-gray-600 text-sm">1,345 Jobs</h3>

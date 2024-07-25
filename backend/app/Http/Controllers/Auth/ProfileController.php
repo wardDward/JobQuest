@@ -7,6 +7,7 @@ use App\Models\EmployeerAdditionalInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -15,7 +16,6 @@ class ProfileController extends Controller
         $data = $request->validate([
             'firstname' => ['required', 'max:50'],
             'lastname' => ['required', 'max:50'],
-            'middlename' => ['required', 'max:50'],
             'company_name' => ['required', 'max:255'],
             'company_logo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:4096'],
             'description' => ['required', 'string'],
@@ -34,7 +34,7 @@ class ProfileController extends Controller
                 ->update([
                     'firstname' => $data['firstname'],
                     'lastname' => $data['lastname'],
-                    'middlename' => $data['middlename'],
+                    'middlename' => $request->middlename,
                     'email_verified_at' => now()
                 ]);
 
@@ -54,7 +54,7 @@ class ProfileController extends Controller
 
             if (!empty($company_logo)) {
                 // Delete previous logo if it exists
-                if ($auth->additionalInfo()->company_logo) {
+                if ($auth->additionalInfo()) {
                     Storage::disk('local')->delete($directory . '/' . $employerInfo->company_logo);
                 }
 
@@ -69,18 +69,32 @@ class ProfileController extends Controller
                 'employer_info' => $employerInfo,
                 'file_path' => $path
             ]);
-        } else {
-            $affected = DB::table('users')
-                ->where('id', $auth->id)
-                ->update([
-                    'firstname' => $data['firstname'],
-                    'lastname' => $data['lastname'],
-                    'middlename' => $data['middlename'],
-                ]);
-
-            return response()->json([
-                'updated' => $affected,
-            ]);
         }
+    }
+
+    public function seekerProfile(Request $request)
+    {
+
+
+        $auth = auth()->user();
+
+        $data = $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+        ]);
+
+
+        $affected = DB::table('users')
+            ->where('id', $auth->id)
+            ->update([
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'middlename' => $request->middlename,
+            ]);
+
+        return response()->json([
+            'updated' => $affected,
+            'message' => 'Profle updated successfully'
+        ]);
     }
 }

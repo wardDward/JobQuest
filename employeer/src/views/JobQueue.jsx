@@ -15,11 +15,14 @@ export default function JobQueue() {
     getJobs();
   }, [dispatch]);
 
+  // Ensure jobs is an array
+  const jobList = Array.isArray(jobs) ? jobs : [];
+
   return (
     <div className="">
       <div className="h-screen w-full flex flex-col p-7">
         <div>
-          <h1 className="text-lg font-semibold tracking-wide text-gray-700 ">Job Queue</h1>
+          <h1 className="text-lg font-semibold tracking-wide text-gray-700">Job Queue</h1>
         </div>
         <div className="my-5 h-[90%]">
           {isLoading ? (
@@ -27,12 +30,12 @@ export default function JobQueue() {
               <span className="loading loading-dots loading-xs"></span>
             </div>
           ) : (
-            jobs.length === 0 ? (
+            jobList.length === 0 ? (
               <div className="flex items-center justify-center">
                 <span className="text-gray-500">No jobs in the queue</span>
               </div>
             ) : (
-              jobs?.map((job) => (
+              jobList.map((job) => (
                 <JobCard job={job} key={job.id} />
               ))
             )
