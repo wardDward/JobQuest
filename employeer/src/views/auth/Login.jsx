@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { handleLogin } from '../../redux/actions/useActions.js'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { handleInputChanges } from '../../utils/inputHelper.js'
 import { useNavigate } from 'react-router-dom'
+import { clearState } from '../../redux/feature/userSlice.js'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -22,6 +23,17 @@ export default function Login() {
       navigate('/')
     }
   }
+
+  useEffect(() => {
+    setFormdata({
+      email: '',
+      password: ''
+    })
+
+    return () => {
+      dispatch(clearState())
+    }
+  }, [dispatch])
 
   return (
     <div className="bg-white w-full sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] shadow-lg p-4 border rounded-md">

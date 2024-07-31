@@ -1,5 +1,5 @@
 import TipTap from "../components/TipTap";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { handleInputChanges } from "../utils/inputHelper";
 import { useDispatch, useSelector } from "react-redux";
 import { createJob } from "../redux/actions/useJobs";
@@ -29,6 +29,29 @@ export default function CreatePost() {
         location: '',
         employement: '',
     })
+
+    useEffect(() => {
+        const hasUnsavedChanges = () => {
+            return (
+                formData.title || formData.starting_salary || formData.to_salary || formData.position || formData.location || formData.employement
+            );
+        };
+
+        const handleBeforeUnload = (event) => {
+            if (hasUnsavedChanges()) {
+                const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+                event.returnValue = confirmationMessage; // Standard for most browsers
+                return confirmationMessage; // For some older browsers
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [formData]);
+
 
     const rawMarkup = marked(content, { sanitize: false });
 

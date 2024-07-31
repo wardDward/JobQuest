@@ -3,7 +3,7 @@ import Google from "../../assets/google.png";
 import Facebook from "../../assets/facebook.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { handleRegister } from "../../redux/features/userSlice";
+import { handleRegister } from "../../redux/actions/userAction";
 import { handleInputChanges } from "../../utils/inputHelper";
 import Swal from "../../components/popUps/Swal";
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';

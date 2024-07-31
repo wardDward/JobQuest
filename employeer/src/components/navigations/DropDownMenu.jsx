@@ -3,11 +3,33 @@ import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { handleLogout } from "../../redux/actions/useActions";
+import LogoutIcon from '@mui/icons-material/Logout';
+
 
 export default function DropDownMenu() {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+
+    const logout = async (e) => {
+        e.preventDefault()
+        const response = await dispatch(handleLogout())
+
+        if (response.meta.requestStatus === 'fulfilled') {
+            navigate('/login')
+        }
+
+        return
+    }
+
+    
     return (
         <div className="flex flex-col" onClick={(e) => e.stopPropagation()}>
-            <Link className="py-3 px-5 flex justify-between items-center shadow-lg m-2 rounded-md hover:bg-slate-100">
+            <Link to="/profile" className="py-3 px-5 flex justify-between items-center shadow-lg m-2 rounded-md hover:bg-slate-100">
                 <img src="../../assets/logo.png" className="h-[40px] w-[40px] rounded-full" alt="" />
                 <span className="truncate m-2 text-sm font-semibold">Edward Taligatos</span>
             </Link>
@@ -30,8 +52,11 @@ export default function DropDownMenu() {
                 </Link>
             </div>
             <div className="mt-4 px-4">
-                <form action="">
-                    <button type="submit" className="text-gray-500 font-semibold tracking-wider hover:bg-slate-100 w-full text-start text-xs py-2 px-5">Log out</button>
+                <form onSubmit={logout} >
+                    <button className="flex items-center py-2 px-1 hover:bg-slate-100 rounded-sm cursor-pointer w-full">
+                        <LogoutIcon sx={{ fontSize: 22 }} />
+                        <span className="text-sm text-gray-600 mt-1 ml-2">Logout</span>
+                    </button>
                 </form>
             </div>
         </div>

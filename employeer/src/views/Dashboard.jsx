@@ -40,9 +40,6 @@ export default function Dashboard() {
           <div className={`flex justify-center items-center ${component === "Production" ? 'border-b-[3px] border-blue-400 text-blue-400' : ''} mr-6 text-xs md:text-sm cursor-pointer`} onClick={() => componentBtn('Production')}>
             Production
           </div>
-          <div className="flex justify-center items-center  text-gray-500 text-md text-xs md:text-sm cursor-pointer">
-            Resumes
-          </div>
         </div>
       </div>
       <div className="h-screen w-full flex flex-col">

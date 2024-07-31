@@ -60,11 +60,14 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
-export const sendEmail = async () => {
-  try {
-    await axios.post("/employer/email/verification-notification");
-  } catch (error) {
-    alert("Something went wrong, please try again.");
-    console.error(error);
+
+export const handleLogout = createAsyncThunk(
+  "users/handleLogout",
+  async (_, thunkApi) => {
+    try {
+      await axios.delete("/employer/logout");
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
   }
-};
+);

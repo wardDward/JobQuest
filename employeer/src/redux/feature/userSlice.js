@@ -10,7 +10,11 @@ const userSlice = createSlice({
     isLoading: false,
     errorMessage: {},
   },
-  reducers: {},
+  reducers: {
+    clearState: (state) => {
+      state.errorMessage = {}
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(handleLogin.pending, state => {
         state.isLoading = true
@@ -70,4 +74,5 @@ const userSlice = createSlice({
   }
 });
 
+export const {clearState} =  userSlice.actions
 export default userSlice.reducer;

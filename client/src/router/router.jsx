@@ -17,6 +17,8 @@ const JobFinder = lazy(() => import("../views/JobFinder"));
 const ResendEmail = lazy(() => import("../views/auth/ResendEmail"));
 const Profile = lazy(() => import("../views/auth/Profile"));
 const Resume = lazy(() => import('../views/auth/Resume'))
+const ResumeMaker = lazy(() => import('../views/auth/ResumeMaker'))
+const ViewJob = lazy(() => import('../views/VIewJob'))
 
 import GuestRoute from "./GuestRoute";
 import ProtectedRoute from "./ProtectedRoute";
@@ -75,10 +77,26 @@ const router = createBrowserRouter(
             }
           />
           <Route
+            path="/view_job/:id"
+            element={
+              <SuspenseWrapper>
+                <ViewJob />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
             path="/resume"
             element={
               <SuspenseWrapper>
                 <Resume/>
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path="/create_resume"
+            element={
+              <SuspenseWrapper>
+                <ResumeMaker/>
               </SuspenseWrapper>
             }
           />

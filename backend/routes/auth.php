@@ -17,6 +17,8 @@ Route::prefix('seeker')->group(function () {
 
     Route::post('/email/verification-notification', [ResendEmailVerificationController::class, 'store'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 
+    Route::delete('/logout', [AuthenticateController::class, 'destroy'])->name('logout');
+
 });
 
 
@@ -26,5 +28,8 @@ Route::prefix('employer')->group(function () {
         Route::post('/login', [AuthenticateController::class, 'store']);
         Route::post('/register', [App\Http\Controllers\Employeer\RegisterController::class, 'register']);
     });
+
+    Route::delete('/logout', [AuthenticateController::class, 'destroy']);
+
 });
 

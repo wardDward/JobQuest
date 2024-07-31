@@ -1,26 +1,34 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { handleInputChanges } from '../../utils/inputHelper';
 import { updateProfile } from '../../redux/actions/userAction';
-import Swal from '../../components/popUps/Swal'
 
 
 export default function Profile() {
     const { } = useAuth()
-    const { isLoading, errorMessage } = useSelector(state => state.users)
+    const { isLoading, errorMessage, users } = useSelector(state => state.users)
     const dispatch = useDispatch()
     const [message, setMessage] = useState('')
     const [swal, setSwal] = useState(false)
-    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         firstname: '',
         middlename: '',
         lastname: '',
     })
+    useEffect(() => {
+        // Update formData when users data is available
+        if (users) {
+            setFormData({
+                firstname: users.firstname || '',
+                middlename: users.middlename || '',
+                lastname: users.lastname || '',
+            });
+        }
+    }, [users]);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -30,12 +38,34 @@ export default function Profile() {
             setMessage(response.payload.message)
             setSwal(true)
 
-
             setTimeout(() => {
                 setSwal(false)
             }, 3000)
         }
     }
+
+    useEffect(() => {
+        const hasUnsavedChanges = () => {
+            return (
+                formData.firstname || formData.middlename || formData.lastname
+            );
+        };
+
+        const handleBeforeUnload = (event) => {
+            if (hasUnsavedChanges()) {
+                const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+                event.returnValue = confirmationMessage; // Standard for most browsers
+                return confirmationMessage; // For some older browsers
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [formData]);
+
 
     return (
         <>
@@ -66,6 +96,7 @@ export default function Profile() {
                                             id="firstname"
                                             name="firstname"
                                             type="text"
+                                            value={formData.firstname}
                                             className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                             onChange={(e) => handleInputChanges(e, formData, setFormData)}
                                         />
@@ -83,6 +114,7 @@ export default function Profile() {
                                             id="lastname"
                                             name="lastname"
                                             type="text"
+                                            value={formData.lastname}
                                             className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                             onChange={(e) => handleInputChanges(e, formData, setFormData)}
                                         />
@@ -101,6 +133,7 @@ export default function Profile() {
                                             id="middlename"
                                             name="middlename"
                                             type="text"
+                                            value={formData.middlename}
                                             className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                             onChange={(e) => handleInputChanges(e, formData, setFormData)}
                                         />
@@ -126,7 +159,7 @@ export default function Profile() {
                     </div>
                 </form>
             </div>
-            {swal && <Swal message={message} status={'success'}>{message}</Swal>}
+            {swal && <div className='absolute top-[20px] z-[999999] bg-magenta-100 rounded-md px-4 py-1 right-[20px] text-white text-sm'>Profile updated.</div>}
         </>
 
     )

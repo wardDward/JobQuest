@@ -63,4 +63,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(EmployeerAdditionalInfo::class, 'user_id');
     }
 
+    public function resumes(){
+        return $this->hasOne(Resume::class, 'user_id');
+    }
+
+
+
 }

@@ -35,13 +35,25 @@ export const fetchJobs = createAsyncThunk(
   }
 );
 
-
-
-export const fetchJob = createAsyncThunk("jobs/fetchJob", async(data, thunkApi) =>{
-  try {
-      const response = await axios.get(`/api/jobs/${data}`)
-      return response.data.data
-  } catch (error) {
-    return thunkApi.rejectWithValue(error.response.data.errors)
+export const fetchJob = createAsyncThunk(
+  "jobs/fetchJob",
+  async (data, thunkApi) => {
+    try {
+      const response = await axios.get(`/api/jobs/${data}`);
+      return response.data.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.response.data.errors);
+    }
   }
-})
+);
+
+export const jobPublication = createAsyncThunk(
+  "jobs/jobPublication",
+  async (data, thunkApi) => {
+    try {
+      const response =  await axios.put("/api/job_publication", {id: data});
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);

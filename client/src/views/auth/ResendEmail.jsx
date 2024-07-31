@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Logo from '../../assets/logo.png'
-import { sendEmail } from '../../redux/features/userSlice'
+import { sendEmail } from '../../redux/actions/userAction'
 import useAuth from '../../hooks/useAuth'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'

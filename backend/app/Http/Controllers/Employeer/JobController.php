@@ -18,7 +18,7 @@ class JobController extends Controller
     {
         $auth = auth()->user()->id;
 
-        $jobs = JobPost::with(['user'])->where('user_id', $auth)->paginate(5);
+        $jobs = JobPost::with(['user', 'bookmarks'])->where('user_id', $auth)->paginate(5);
 
         return JobResource::collection($jobs);
     }

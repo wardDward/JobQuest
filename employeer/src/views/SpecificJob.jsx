@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
-import { fetchJob } from "../redux/actions/useJobs"
+import { useNavigate, useParams } from "react-router-dom"
+import { fetchJob, jobPublication } from "../redux/actions/useJobs"
 import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
 import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithChangesOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -12,14 +12,28 @@ import DOMPurify from "dompurify";
 
 const JobInfo = ({ info }) => {
     const sanitizedMarkup = DOMPurify.sanitize(info?.description);
+    
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
+    const handleSubmit = async() => {
+        await dispatch(jobPublication(info?.id))
+        navigate('/queue')
+    }
 
     return (
         <>
             <div className="flex justify-end items-center gap-2 mt-5">
-                <div className="flex items-center py-1 px-[10px] hover:bg-slate-200 rounded-md cursor-pointer">
-                    <UnpublishedOutlinedIcon className="text-gray-700" sx={{ fontSize: 26 }} />
-                    <span className="text-sm mt-1 text-gray-700 font-semibold ml-1">Unpublished</span>
+                <div className="flex items-center py-1 px-[10px] hover:bg-slate-200 rounded-md cursor-pointer" onClick={() => handleSubmit()}>
+                    {
+                        info?.deleted_at === null ? <div>
+                            <UnpublishedOutlinedIcon className="text-gray-700" sx={{ fontSize: 26 }} />
+                            <span className="text-sm mt-1 text-gray-700 font-semibold ml-1">Unpublished</span>
+                        </div> : <div>
+                            <PublishedWithChangesOutlinedIcon className="text-gray-700" sx={{ fontSize: 26 }} />
+                            <span className="text-sm mt-1 text-gray-700 font-semibold ml-1">Published</span>
+                        </div>
+                    }
                 </div>
             </div>
             <hr className="border-x-0 border-t-[5px] border-b-[0px] my-4" />
@@ -48,24 +62,24 @@ const JobInfo = ({ info }) => {
                                     <span className='block ml-2'>₱{`${info.to_salary}`}</span>
                                 </p>
                             </div>
-                      
+
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col my-4">
-                        <div className="flex items-center text-gray-700 mb-3">
-                            <LocationOnOutlinedIcon className="mr-3" sx={{fontSize: 23}}/>
-                            <span className="text-sm">{info.location}</span>
-                        </div>
-                        <div className="flex items-center text-gray-700 mb-3">
-                            <WorkOutlineOutlinedIcon className="mr-3" sx={{fontSize: 23}}/>
-                            <span className="text-sm">{info.location}</span>
-                        </div>
-                        <div className="flex items-center text-gray-700 mb-3">
-                            <AccessTimeOutlinedIcon className="mr-3" sx={{fontSize: 23}}/>
-                            <span className="text-sm">{info.location}</span>
-                        </div>
+                    <div className="flex items-center text-gray-700 mb-3">
+                        <LocationOnOutlinedIcon className="mr-3" sx={{ fontSize: 23 }} />
+                        <span className="text-sm">{info.location}</span>
                     </div>
+                    <div className="flex items-center text-gray-700 mb-3">
+                        <WorkOutlineOutlinedIcon className="mr-3" sx={{ fontSize: 23 }} />
+                        <span className="text-sm">{info.location}</span>
+                    </div>
+                    <div className="flex items-center text-gray-700 mb-3">
+                        <AccessTimeOutlinedIcon className="mr-3" sx={{ fontSize: 23 }} />
+                        <span className="text-sm">{info.location}</span>
+                    </div>
+                </div>
                 <div className='my-[20px] prose prose-sm'
                     dangerouslySetInnerHTML={{ __html: sanitizedMarkup }}
                 />

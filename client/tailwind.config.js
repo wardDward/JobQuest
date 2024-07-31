@@ -6,7 +6,7 @@ export default {
       colors: {
         current: "#2739DF",
         currentDarker: "#2134de",
-        darkerBlue: '#051a49',
+        darkerBlue: "#051a49",
         magenta: {
           100: "#FF00FF",
           200: "#ad03ad",
@@ -14,5 +14,5 @@ export default {
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"), require("@tailwindcss/typography")],
 };

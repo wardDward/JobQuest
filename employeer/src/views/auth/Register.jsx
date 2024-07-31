@@ -1,8 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { handleRegister } from '../../redux/actions/useActions.js'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { handleInputChanges } from '../../utils/inputHelper.js'
 import { useDispatch, useSelector } from 'react-redux'
+import { clearState } from '../../redux/feature/userSlice.js'
 
 export default function Register() {
     const dispatch = useDispatch()
@@ -25,6 +26,17 @@ export default function Register() {
             navigate('/')
         }
     }
+
+    useEffect(() => {
+        setFormData({
+            email: '',
+            password: ''
+        })
+
+        return () => {
+            dispatch(clearState())
+        }
+    }, [dispatch])
 
     return (
         <div className="bg-white w-full sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] shadow-lg p-4 border rounded-md">

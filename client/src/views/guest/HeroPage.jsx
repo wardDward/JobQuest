@@ -9,7 +9,7 @@ export default function HeroPage() {
     <>
       <SearchSection />
       <RecentSearch />
-      <div className="px-2 sm:px-10 md:px-[80px] lg:px-[200px] xl:px-[300px] ">
+      <div className="px-2 sm:px-10 md:px-[80px] lg:px-[200px] xl:px-[300px]">
         <div className="bg-slate-200 p-10 rounded-lg w-full flex justify-center items-center flex-col">
           <div className="flex items-center">
             <Link

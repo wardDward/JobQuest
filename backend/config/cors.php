@@ -20,10 +20,12 @@ return [
         'sanctum/csrf-cookie',
         'seeker/login',
         'seeker/register',
+        'seeker/logout',
         'seeker/email/verify',
         'seeker/email/verification-notification',
         'employer/login',
         'employer/register',
+        'employer/logout',
         'employer/email/verify',
         'employer/email/verification-notification'
     ],

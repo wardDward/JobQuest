@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class JobResource extends JsonResource
 {
@@ -14,6 +15,9 @@ class JobResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        $userId = Auth::id();
+
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
@@ -22,11 +26,14 @@ class JobResource extends JsonResource
             'to_salary' => $this->to_salary,
             'description' => $this->description,
             'position' => $this->position,
-            'employement' => $this->location,
-            'location' => $this->employement,
+            'employement' => $this->employement,
+            'location' => $this->location,
             'author' => new UserResource($this->user),
+            'bookmark' => $this->isBookmarkedBy($userId),
+            'is_applied' => $this->isApplied($userId),
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at
         ];
     }
 }

@@ -11,24 +11,21 @@ class RegisterController extends Controller
 {
     public function register(Request $request)
     {
-        try {
 
-            $data = $request->validate([
-                'email' => 'required|unique:users,email|email',
-                'password' => 'required|min:6'
-            ]);
+        $data = $request->validate([
+            'email' => 'required|unique:users,email|email',
+            'password' => 'required|min:6'
+        ]);
 
-            $user = User::create([
-                'email' => $data['email'],
-                'password' => bcrypt($data['password']),
-                'role' => 'employeer'
-            ]);
+        $user = User::create([
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'role' => 'employeer'
+        ]);
 
-            Auth::login($user);
+        Auth::login($user);
 
-            return response()->noContent();
-        } catch (\Throwable $e) {
-            \Log::error($e);
-        }
+        return response()->noContent();
+
     }
 }
